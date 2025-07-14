@@ -4,9 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Button, Descriptions, Spin, message } from 'antd';
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons';
 import { AppContext } from '../../contexts/AppContext.jsx';
+import SensorsDataTable from '../SensorsData/SensorsDataTable.jsx';
 
-export default function Category() {
-  const [category, setCategory] = useState(null);
+export default function Sensor() {
+  const [sensor, setSensor] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,20 +16,20 @@ export default function Category() {
 
   useEffect(() => {
     if (id) {
-      fetch(`${API_BASE_URL}/api/categories/${id}`)
+      fetch(`${API_BASE_URL}/api/sensors/${id}`)
         .then(response => {
           if (!response.ok) {
-            throw new Error('Category not found');
+            throw new Error('Sensor not found');
           }
           return response.json();
         })
         .then(data => {
-          console.log('category data:', data);
-          setCategory(data);
+          console.log('sensor data:', data);
+          setSensor(data);
         })
         .catch(error => {
-          console.error('Error fetching category:', error);
-          message.error('Failed to load category data');
+          console.error('Error fetching sensor:', error);
+          message.error('Failed to load sensor data');
         })
         .finally(() => {
           setLoading(false);
@@ -40,41 +41,41 @@ export default function Category() {
     return (
       <div style={{ textAlign: 'center', padding: '50px' }}>
         <Spin size="large" />
-        <p style={{ marginTop: '16px' }}>Loading category...</p>
+        <p style={{ marginTop: '16px' }}>Loading sensor...</p>
       </div>
     );
   }
 
-  if (!category) {
+  if (!sensor) {
     return (
       <div style={{ textAlign: 'center', padding: '50px' }}>
-        <h2>Category not found</h2>
+        <h2>Sensor not found</h2>
         <Button 
           type="primary" 
           icon={<ArrowLeftOutlined />}
-          onClick={() => navigate('/categories')}
+          onClick={() => navigate('/sensors')}
         >
-          Back to Categories
+          Back to Sensors
         </Button>
       </div>
     );
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
       <Card
-        title={`Category: ${category.name}`}
+        title={`Sensor: ${sensor.code}`}
         extra={
           <div style={{ display: 'flex', gap: '8px' }}>
             <Button 
               icon={<EditOutlined />}
-              onClick={() => navigate(`/categories/edit/${category.id}`)}
+              onClick={() => navigate(`/sensors/edit/${sensor.id}`)}
             >
               Edit
             </Button>
             <Button 
               icon={<ArrowLeftOutlined />}
-              onClick={() => navigate('/categories')}
+              onClick={() => navigate('/sensors')}
             >
               Back
             </Button>
@@ -87,10 +88,7 @@ export default function Category() {
           size="middle"
         >
           <Descriptions.Item label="ID">
-            {category.id}
-          </Descriptions.Item>
-          <Descriptions.Item label="Name">
-            {category.name}
+            {sensor.id}
           </Descriptions.Item>
           <Descriptions.Item label="Code">
             <code style={{ 
@@ -99,11 +97,18 @@ export default function Category() {
               borderRadius: '4px',
               fontFamily: 'monospace'
             }}>
-              {category.code}
+              {sensor.code}
             </code>
+          </Descriptions.Item>
+          <Descriptions.Item label="Latitude">
+            {sensor.latitude}
+          </Descriptions.Item>
+          <Descriptions.Item label="Longitude">
+            {sensor.longitude}
           </Descriptions.Item>
         </Descriptions>
       </Card>
+      <SensorsDataTable sensorId={id} />
     </div>
   );
 }

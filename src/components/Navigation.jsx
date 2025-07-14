@@ -12,15 +12,15 @@ const Navigation = () => {
 
   const menuItems = [
     {
-      key: '/categories',
+      key: '/sensors',
       icon: <TagsOutlined />,
-      label: 'Categories',
+      label: 'Sensors',
     },
-    {
-      key: '/products',
-      icon: <AppstoreOutlined />,
-      label: 'Products',
-    },
+    // {
+    //   key: '/products',
+    //   icon: <AppstoreOutlined />,
+    //   label: 'Products',
+    // },
   ];
 
   const handleMenuClick = ({ key }) => {

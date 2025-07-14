@@ -4,21 +4,21 @@ import { Table, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../contexts/AppContext.jsx";
 
-export default function Categories() {
-  const [categories, setCategories] = React.useState([]);
+export default function Sensors() {
+  const [sensors, setSensors] = React.useState([]);
   const navigate = useNavigate();
 
   const { API_BASE_URL } = React.useContext(AppContext);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/categories`)
+    fetch(`${API_BASE_URL}/api/sensors`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("categories data:", data);
-        setCategories(data);
+        console.log("sensors data:", data);
+        setSensors(data);
       })
       .catch((error) => {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching sensors:", error);
       });
   }, []);
 
@@ -29,25 +29,30 @@ export default function Categories() {
       key: "id",
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
       title: "Code",
       dataIndex: "code",
       key: "code",
+    },
+    {
+      title: "Latitude",
+      dataIndex: "latitude",
+      key: "latitude",
+    },
+    {
+      title: "Longitude",
+      dataIndex: "longitude",
+      key: "longitude",
     },
     {
       title: "Actions",
       key: "actions",
       render: (text, record) => (
         <span>
-          <a href={`/categories/${record.id}`}>View</a>
+          <a href={`/sensors/${record.id}`}>View Data</a>
           <span style={{ margin: "0 8px" }}>|</span>
-          <a href={`/categories/edit/${record.id}`}>Edit</a>
+          <a href={`/sensors/edit/${record.id}`}>Edit</a>
           <span style={{ margin: "0 8px" }}>|</span>
-          <a href={`/categories/delete/${record.id}`}>Delete</a>
+          <a href={`/sensors/delete/${record.id}`}>Delete</a>
         </span>
       ),
     },
@@ -55,13 +60,13 @@ export default function Categories() {
 
   return (
     <div>
-      <h1>Categories</h1>
-      <Button type="primary" onClick={() => navigate("/categories/new")}>
+      <h1>Sensors</h1>
+      <Button type="primary" onClick={() => navigate("/sensors/new")}>
         Add New
       </Button>
       <Table
         columns={columns}
-        dataSource={categories}
+        dataSource={sensors}
         rowKey="id"
         pagination={false}
       />
