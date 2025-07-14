@@ -208,19 +208,19 @@ export default function SensorsDataTable({ sensorId }) {
           <span>
             {sensorId ? `Sensor ${sensorId} Data` : 'Sensors Data'}
           </span>
-          <Button
+          {/* <Button
             icon={<ReloadOutlined />}
             onClick={handleRefresh}
             loading={loading}
           >
             Refresh
-          </Button>
+          </Button> */}
         </div>
       }
       style={{ margin: '16px 0' }}
     >
       {/* Filters */}
-      <div style={{ marginBottom: 16 }}>
+      {/* <div style={{ marginBottom: 16 }}>
         <Space wrap>
           <Input.Search
             placeholder="Search by notes, magnitude, coordinates, or depth"
@@ -239,7 +239,7 @@ export default function SensorsDataTable({ sensorId }) {
             style={{ width: 350 }}
           />
         </Space>
-      </div>
+      </div> */}
 
       {/* Statistics */}
       <div style={{ marginBottom: 16 }}>
